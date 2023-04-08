@@ -1,24 +1,39 @@
 with customers as (
-select * from {{ ref('stg_customers') }}
+
+    select * from {{ ref('stg_customers') }}
+
 ),
 
 orders as (
 
-select * from {{ ref('stg_orders') }}
+    select * from {{ ref('stg_orders') }}
+
+),
+
+payments as (
+
+    select * from {{ ref('stg_payment') }}
 
 ),
 
 customer_orders as (
-    select customer_id,
-    min(order_date) as first_order,
-    max(order_date) as recent_order
+
+        select
+        customer_id,
+
+        min(order_date) as first_order,
+        max(order_date) as most_recent_order,
+        count(order_id) as number_of_orders
     from orders
-    group by 1
+
+    group by customer_id
+
 ),
+
 
 final as (
 
-      select
+    select
         customers.customer_id,
         customers.first_name,
         customers.last_name,
@@ -34,6 +49,7 @@ final as (
 
     left join customer_orders
         on customers.customer_id = customer_orders.customer_id
+
 
 )
 
