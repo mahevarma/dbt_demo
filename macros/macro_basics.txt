@@ -1,0 +1,14 @@
+Macros  
+
+- we ofter write similar logic in  multiple  places
+
+-eg pivot, date/times remove duplicates
+
+-- Write generic logic once 
+-- re-use that logic throughout your project
+
+-- we can use the macros that others wrote in our own work
+
+
+
+
