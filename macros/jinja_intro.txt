@@ -1,0 +1,12 @@
+-- Python based templating Language
+
+-- Bring functional aspects to SQL
+
+-- we have already been using jinja in dbt eg {{ref ('stf_orders')}}
+
+-- write sql faster with less lines of code.
+
+-- sets foundation for macros.
+
+
+
