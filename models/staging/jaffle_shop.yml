@@ -2,12 +2,15 @@ version: 2
 
 models:
   - name: stg_orders
+    description: one unique per row
     columns:
       - name: order_id
+        description: primary key  column
         tests:
           - unique
           - not_null
       - name: status
+        description: "{{ doc('order_status')}}"
         tests:
           - accepted_values:
               values: ['placed', 'shipped', 'completed', 'returned']
