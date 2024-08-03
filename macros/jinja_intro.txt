@@ -9,4 +9,84 @@
 -- sets foundation for macros.
 
 
+--- FOR loop example 
 
+{% for i in range(1, 11) %}
+    select {{ i }} as number
+    {% if not loop.last %}
+    union all
+    {% endif %}
+{% endfor %}
+
+
+-- Variable
+
+{% set my_string = 'Hello' %}
+{% set my_number = 100 %}
+
+select {{my_string}} I have total {{my_number}} students
+
+-- FOr loop 
+
+{% set fruits = ["apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew"] %}
+
+
+{% for x in fruits %}
+{{x}}
+{% endfor %}
+
+
+{% set fruits = ["apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew"] %}
+
+{% for fruit in fruits %}
+    {% if fruit == "banana" %}
+        {{ fruit }} is my favorite fruit!
+    {% else %}
+        {{ fruit }} is not my favorite fruit.
+    {% endif %}
+{% endfor %}
+
+
+-- Dictionary example 
+
+{% set fruit_colors = {
+    "apple": "red",
+    "banana": "yellow",
+    "cherry": "red",
+    "date": "brown",
+    "elderberry": "purple",
+    "fig": "purple",
+    "grape": "green",
+    "honeydew": "green"
+} %}
+
+{% for fruit, color in fruit_colors.items() %}
+    The color of {{ fruit }} is {{ color }}.
+{% endfor %}
+
+
+
+--- Jinja application 
+
+select
+    orderid,
+    sum(case when paymentmethod = 'bank_transfer' then amount end) as bank_transfer_amount,
+    sum(case when paymentmethod = 'credit_card' then amount end) as credit_card_amount,
+    sum(case when paymentmethod = 'gift_card' then amount end) as gift_card_amount,
+    sum(amount) as total_amount
+from payment
+group by 1
+
+{% set payment_methods = ["bank_transfer", "credit_card", "gift_card"] %}
+
+select
+    orderid,
+    {% for payment_method in payment_methods -%}
+    sum(case when paymentmethod = '{{payment_method}}' then amount end) as {{payment_method}}_amount,
+    {% endfor -%}
+    sum(amount) as total_amount
+from payment
+group by 1
+
+
+https://jinja.palletsprojects.com/en/3.1.x/templates/
