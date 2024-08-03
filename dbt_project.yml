@@ -36,8 +36,8 @@ models:
     # Applies to all files under models/example/
     example:
       materialized: view
-on-run-start:
+# on-run-start:
   #- "{{ create_run_end_results_table() }}"
-on-run-end: 
+# on-run-end: 
   #- "{{ log_dbt_results(results) }}"
-  - "{{ log_run_end_results_test(results) }}"
+  #- "{{ log_run_end_results_test(results) }}"
